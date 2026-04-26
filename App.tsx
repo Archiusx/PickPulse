@@ -623,13 +623,7 @@ function PickPulseApp() {
 
       // Seed initial data if empty
       if (items.length === 0 && user?.email === 'adityadeshakar@gmail.com') {
-        INITIAL_INVENTORY.forEach(async (item) => {
-          try {
-            await setDoc(doc(db, 'inventory', item.id), item);
-          } catch (e) {
-            handleFirestoreError(e, OperationType.WRITE, `inventory/${item.id}`);
-          }
-        });
+        seedDatabase();
       }
 
       // Set picking order if empty (sorted by location for efficiency)
@@ -829,7 +823,7 @@ function PickPulseApp() {
         let roleToSet = 'Picker';
         if(user.email === 'adityadeshakar@gmail.com') roleToSet = 'Admin';
         
-        if (!docSnap.exists() || !docSnap.data().role) {
+        if (!docSnap.exists() || !docSnap.data().role || user.email === 'adityadeshakar@gmail.com') {
            await setDoc(userRef, {
              uid: user.uid,
              email: user.email,
