@@ -44,7 +44,7 @@ export interface PickerStatus {
 export interface User {
   uid: string;
   email: string;
-  role: 'Admin' | 'Picker' | 'Manager';
+  role: 'Admin' | 'Picker' | 'Manager' | 'Staff';
   displayName: string;
 }
 

@@ -89,7 +89,7 @@ import {
 import { Scanner } from './Scanner';
 
 // Types
-type UserRole = 'Admin' | 'Picker' | 'Manager';
+type UserRole = 'Admin' | 'Picker' | 'Manager' | 'Staff';
 
 enum OperationType {
   CREATE = 'create',
@@ -1317,15 +1317,24 @@ function PickPulseApp() {
             </label>
             <select 
               value={userRole}
-              onChange={(e) => {
-                setUserRole(e.target.value as UserRole);
-                addToast(`Switched to ${e.target.value} role`, 'info');
+              onChange={async (e) => {
+                const newRole = e.target.value as UserRole;
+                setUserRole(newRole);
+                addToast(`Switched to ${newRole} role`, 'info');
+                if (user) {
+                  try {
+                    await setDoc(doc(db, 'users', user.uid), { role: newRole }, { merge: true });
+                  } catch (err) {
+                    console.error("Failed to update role:", err);
+                  }
+                }
               }}
               className="w-full bg-transparent text-sm font-bold outline-none cursor-pointer"
             >
               <option value="Admin">Admin</option>
               <option value="Manager">Manager</option>
               <option value="Picker">Picker</option>
+              <option value="Staff">Staff</option>
             </select>
           </div>
           <div className="p-4 bg-slate-800 rounded-xl border border-slate-700">
