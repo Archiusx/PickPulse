@@ -823,12 +823,14 @@ function PickPulseApp() {
     const syncProfile = async () => {
       try {
         const userRef = doc(db, 'users', user.uid);
+        // We'll let the onSnapshot handle reading the initial role.
+        // But we want to ensure basic info is synced. We'll omit 'role' from the blanket merge 
+        // to avoid overwriting whatever they select.
         await setDoc(userRef, {
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
-          photoURL: user.photoURL,
-          role: user.email === 'adityadeshakar@gmail.com' ? 'Admin' : 'Picker' // Default role
+          photoURL: user.photoURL
         }, { merge: true });
       } catch (e) {
         handleFirestoreError(e, OperationType.WRITE, `users/${user.uid}`);
