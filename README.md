@@ -17,55 +17,23 @@ BlinkAI is a modern, real-time application designed to streamline quick-commerce
 * **Frontend:** React 19, Vite, TypeScript
 * **Styling:** Tailwind CSS, Lucide React (Icons), framer-motion
 * **Backend / Database:** Firebase (Authentication, Firestore Realtime Database)
-* **AI Integration:** Google Gen AI SDK (Gemini 3.1 Pro/Flash)
-* **Drag-and-Drop:** @dnd-kit
+* **AI Integration:** Google Gen AI SDK (Gemini)
 
-## 🚀 Getting Started
+## 🚀 Deployment (Vercel)
 
-### Prerequisites
-* Node.js (v18+)
-* A Firebase Project with Firestore and Google Authentication enabled
-* A Google Gemini API Key
+This project has a "Flat" structure (all files in the main directory), making it exceptionally easy to host on Vercel right from your phone.
 
-### Installation
+### Step-by-Step Vercel Guide
+1. Go to [Vercel](https://vercel.com) and log in.
+2. Select **Add New** -> **Project**.
+3. Import your `BlinkAI` GitHub repository.
+4. **Environment Variables:** Make sure you expand the "Environment Variables" section before deploying and add the following key:
+   * **Name:** `GEMINI_API_KEY`
+   * **Value:** (Your Google Gemini API Key)
+   
+*(Note: Ensure you include the Gemini API Key or the AI prediction features will be disabled).*
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/YourUsername/blink-ai.git
-   cd blink-ai
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Set up Environment Variables:**
-   Create a `.env` file in the root directory (or configure them in your deployment platform) and add your keys:
-   ```env
-   VITE_FIREBASE_API_KEY=your_api_key
-   VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-   VITE_FIREBASE_PROJECT_ID=your_project_id
-   VITE_FIREBASE_APP_ID=your_app_id
-   VITE_FIREBASE_FIRESTORE_DATABASE_ID=your_database_id
-   VITE_GEMINI_API_KEY=your_gemini_api_key
-   ```
-   *(Note: The codebase may use `firebase-applet-config.json` depending on your active setup. For purely local dev, standard `.env` patterns apply).*
-
-4. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-   The app will start at `http://localhost:3000`.
-
-## 📦 Deployment (Vercel)
-
-This project uses a "Flat" structure without a `src` folder, optimizing it for direct manual uploads or streamlined Vercel deployments.
-
-1. Go to [Vercel](https://vercel.com) and import your GitHub repository.
-2. In the project settings, ensure the **Build Command** is `npm run build` and **Output Directory** is `dist`.
-3. Add the Environment Variables listed in the Installation step.
-4. Click **Deploy**.
+5. Click **Deploy**.
 
 ## 🔒 Firebase Security Rules
 
@@ -80,10 +48,20 @@ service cloud.firestore {
       return isAuthenticated() &&
         (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin' ||
-         (request.auth.token.email == "your-admin-email@gmail.com" && request.auth.token.email_verified == true));
+         (request.auth.token.email == "adityadeshakar@gmail.com" && request.auth.token.email_verified == true));
     }
-    // Implement granular collection rules based on your app's needs
-    match /{document=**} {
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() || (isAuthenticated() && request.auth.uid == userId);
+    }
+    match /inventory/{itemId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+      match /history/{historyId} {
+        allow read, create: if isAuthenticated();
+      }
+    }
+    match /{path=**} {
       allow read, write: if isAuthenticated();
     }
   }
@@ -92,3 +70,4 @@ service cloud.firestore {
 
 ---
 *Built with React, Firebase, and Gemini AI.*
+

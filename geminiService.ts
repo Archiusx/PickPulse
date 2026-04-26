@@ -1,8 +1,25 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+
+function getAi() {
+  if (!aiInstance) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error("GEMINI_API_KEY is missing. AI features will not work.");
+      // Rather than throwing and crashing the entire app, we handle it gracefully here
+      // so the rest of the application can still load.
+      return null;
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+}
 
 export async function getDemandForecast(localContext: string, currentInventory: any[]) {
+  const ai = getAi();
+  if (!ai) return null;
+
   const prompt = `
     You are an expert supply chain analyst for Blinkit. 
     Context: ${localContext}
@@ -40,6 +57,9 @@ export async function getDemandForecast(localContext: string, currentInventory: 
 }
 
 export async function getSlottingOptimization(pickingLogs: any[]) {
+  const ai = getAi();
+  if (!ai) return null;
+
   const prompt = `
     Analyze these picking logs and suggest shelf slotting optimizations to reduce picking time.
     Logs: ${JSON.stringify(pickingLogs)}
