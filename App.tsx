@@ -1308,7 +1308,7 @@ function PickPulseApp() {
           )}
         </div>
 
-        <div className="hidden lg:block mt-auto space-y-4">
+        <div className="mt-4 lg:mt-auto space-y-4 shrink-0">
           {/* Role Selector (Demo Only) */}
           <div className="p-3 bg-slate-800 rounded-xl border border-slate-700">
             <label className="block text-[10px] font-bold text-slate-500 uppercase mb-2 flex items-center gap-2">
