@@ -1,5 +1,6 @@
 # PickPulse - Intelligent Dark Store Management
 
+Test Now : https://pick-pulse-five.vercel.app
 PickPulse is a modern, real-time application designed to streamline quick-commerce and dark store operations. It features intelligent inventory management, picker coordination, compliance tracking, and leverages Google's Gemini AI for demand forecasting and slotting optimization.
 
 ## 🌟 Key Features
