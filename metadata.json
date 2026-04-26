@@ -1,0 +1,5 @@
+{
+  "name": "BlinkAI: Smart Dark Store IMS",
+  "description": "An AI-powered inventory management system for Blinkit dark stores, featuring hyperlocal demand forecasting, automated expiry tracking, and optimized picking workflows using Google Gemini.",
+  "requestFramePermissions": ["camera"]
+}

@@ -1,0 +1,179 @@
+{
+  "entities": {
+    "InventoryItem": {
+      "title": "InventoryItem",
+      "description": "A single SKU in the dark store inventory",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "stock": { "type": "number" },
+        "minStock": { "type": "number" },
+        "expiryDate": { "type": "string", "format": "date-time" },
+        "location": { "type": "string" },
+        "pickingFrequency": { "type": "number" },
+        "barcode": { "type": "string" }
+      },
+      "required": ["id", "name", "category", "stock", "minStock", "expiryDate", "location"]
+    },
+    "StockHistory": {
+      "title": "StockHistory",
+      "description": "History of stock adjustments for an item",
+      "type": "object",
+      "properties": {
+        "itemId": { "type": "string" },
+        "previousStock": { "type": "number" },
+        "newStock": { "type": "number" },
+        "adjustment": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "user": { "type": "string" },
+        "reason": { "type": "string" }
+      },
+      "required": ["itemId", "previousStock", "newStock", "adjustment", "timestamp", "user"]
+    },
+    "ComplianceRecord": {
+      "title": "ComplianceRecord",
+      "description": "Store compliance metrics like temperature and cleaning",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["temperature", "cleaning", "regulatory"] },
+        "value": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["normal", "warning", "critical"] }
+      },
+      "required": ["type", "value", "timestamp", "status"]
+    },
+    "Ticket": {
+      "title": "Ticket",
+      "description": "Issue reported by picker or staff",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "type": { "type": "string", "enum": ["qr_not_visible", "product_not_found", "damaged", "other"] },
+        "description": { "type": "string" },
+        "status": { "type": "string", "enum": ["open", "resolved", "closed"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "itemId": { "type": "string" }
+      },
+      "required": ["userId", "type", "status", "timestamp"]
+    },
+    "ApprovalRequest": {
+      "title": "ApprovalRequest",
+      "description": "Request requiring manager approval",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "type": { "type": "string", "enum": ["emergency_complete", "new_stock", "price_change"] },
+        "details": { "type": "object" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "orderId": { "type": "string" }
+      },
+      "required": ["userId", "type", "status", "timestamp"]
+    },
+    "VendorMessage": {
+      "title": "VendorMessage",
+      "description": "Chat message between store and vendor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "vendorId": { "type": "string" }
+      },
+      "required": ["senderId", "text", "timestamp"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile and role",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["Admin", "Manager", "Picker"] }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A completed or in-progress order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderId": { "type": "string" },
+        "itemsPicked": { "type": "number" },
+        "totalItems": { "type": "number" },
+        "pickerName": { "type": "string" },
+        "pickerEmail": { "type": "string" },
+        "pickerId": { "type": "string" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "endTime": { "type": "string", "format": "date-time" },
+        "timeTakenMinutes": { "type": "number" },
+        "status": { "type": "string", "enum": ["picking", "completed", "emergency_completed", "pending_packing"] },
+        "issues": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["orderId", "pickerId", "status", "startTime"]
+    },
+    "PickerStatus": {
+      "title": "PickerStatus",
+      "description": "Real-time status of a picker",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "status": { "type": "string", "enum": ["picking", "idle", "break"] },
+        "currentZone": { "type": "string" },
+        "lastActive": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "status", "currentZone", "lastActive"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and roles"
+    },
+    "/inventory/{itemId}": {
+      "schema": "InventoryItem",
+      "description": "Real-time inventory collection"
+    },
+    "/inventory/{itemId}/history/{historyId}": {
+      "schema": "StockHistory",
+      "description": "Stock adjustment history for an item"
+    },
+    "/compliance/{recordId}": {
+      "schema": "ComplianceRecord",
+      "description": "Store compliance logs"
+    },
+    "/tickets/{ticketId}": {
+      "schema": "Ticket",
+      "description": "Issue tickets"
+    },
+    "/approvals/{approvalId}": {
+      "schema": "ApprovalRequest",
+      "description": "Manager approval requests"
+    },
+    "/vendor_messages/{messageId}": {
+      "schema": "VendorMessage",
+      "description": "Vendor chat messages"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Order history and status"
+    },
+    "/picker_status/{pickerId}": {
+      "schema": "PickerStatus",
+      "description": "Real-time picker status"
+    }
+  }
+}
