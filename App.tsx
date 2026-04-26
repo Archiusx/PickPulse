@@ -822,16 +822,30 @@ function PickPulseApp() {
     // Sync profile to Firestore
     const syncProfile = async () => {
       try {
+        
         const userRef = doc(db, 'users', user.uid);
-        // We'll let the onSnapshot handle reading the initial role.
-        // But we want to ensure basic info is synced. We'll omit 'role' from the blanket merge 
-        // to avoid overwriting whatever they select.
-        await setDoc(userRef, {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL
-        }, { merge: true });
+        const docSnap = await getDoc(userRef);
+        
+        let roleToSet = 'Picker';
+        if(user.email === 'adityadeshakar@gmail.com') roleToSet = 'Admin';
+        
+        if (!docSnap.exists() || !docSnap.data().role) {
+           await setDoc(userRef, {
+             uid: user.uid,
+             email: user.email,
+             displayName: user.displayName,
+             photoURL: user.photoURL,
+             role: roleToSet
+           }, { merge: true });
+        } else {
+           await setDoc(userRef, {
+             uid: user.uid,
+             email: user.email,
+             displayName: user.displayName,
+             photoURL: user.photoURL
+           }, { merge: true });
+        }
+
       } catch (e) {
         handleFirestoreError(e, OperationType.WRITE, `users/${user.uid}`);
       }
@@ -1311,7 +1325,21 @@ function PickPulseApp() {
         </div>
 
         <div className="mt-4 lg:mt-auto space-y-4 shrink-0">
+          
+          {userRole === 'Admin' && (
+            <button
+              onClick={async () => {
+                 const success = await seedDatabase();
+                 if(success) addToast('Sample data seeded successfully!', 'success');
+              }}
+              className="w-full flex items-center justify-center gap-2 mb-4 px-4 py-2 bg-yellow-500/20 text-yellow-500 font-bold rounded-xl hover:bg-yellow-500/30 transition-colors"
+            >
+              Seed Sample Data
+            </button>
+          )}
+
           {/* Role Selector (Demo Only) */}
+
           <div className="p-3 bg-slate-800 rounded-xl border border-slate-700">
             <label className="block text-[10px] font-bold text-slate-500 uppercase mb-2 flex items-center gap-2">
               <Shield size={12} />
