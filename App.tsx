@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';
+import { db, auth } from './fakeFirebase';
 import { 
   LayoutDashboard, 
   Package, 
@@ -62,7 +63,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { getDemandForecast, getSlottingOptimization } from './geminiService';
-import { db, auth } from './firebase';
+
 import { 
   collection, 
   onSnapshot, 
@@ -77,14 +78,14 @@ import {
   limit,
   setDoc,
   getDocs
-} from 'firebase/firestore';
+} from './fakeFirebase';
 import { 
   signInWithPopup, 
   GoogleAuthProvider, 
   onAuthStateChanged,
   signOut,
   User as FirebaseUser
-} from 'firebase/auth';
+} from './fakeFirebase';
 import { Scanner } from './Scanner';
 
 // Types
@@ -430,10 +431,10 @@ function PickPulseApp() {
   const [forecast, setForecast] = useState<any>(null);
   const [optimizations, setOptimizations] = useState<any>(null);
   const [localContext, setLocalContext] = useState('IPL Match in Nagpur today - high demand for snacks and cold drinks.');
-  const [user, setUser] = useState<FirebaseUser | null>(null);
+  const [user, setUser] = useState<FirebaseUser | null>(auth.currentUser as FirebaseUser | null);
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<string | null>(null);
-  const [isAuthReady, setIsAuthReady] = useState(false);
+  const [isAuthReady, setIsAuthReady] = useState(true);
   const [pickingOrder, setPickingOrder] = useState<InventoryItem[]>([
     { id: '1', name: 'Amul Gold Milk 1L', category: 'Dairy', stock: 12, minStock: 20, expiryDate: '2026-04-09', location: 'A-12', pickingFrequency: 85 },
     { id: '2', name: 'Britannia Bread', category: 'Bakery', stock: 45, minStock: 30, expiryDate: '2026-04-10', location: 'B-04', pickingFrequency: 70 },
@@ -1213,27 +1214,6 @@ function PickPulseApp() {
     );
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-900 p-4">
-        <div className="max-w-md w-full glass-panel p-8 text-center bg-white/10 border-white/20">
-          <div className="w-16 h-16 brand-yellow rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Zap className="text-white fill-white" size={32} />
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome to PickPulse</h1>
-          <p className="text-slate-400 mb-8">Secure Dark Store Inventory Management System</p>
-          <button 
-            onClick={handleLogin}
-            className="w-full py-4 bg-yellow-400 text-slate-900 font-bold rounded-xl hover:bg-blue-400 transition-all flex items-center justify-center gap-3"
-          >
-            <User size={20} />
-            Sign in with Google
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   const lowStockItems = inventory.filter(i => i.stock <= i.minStock);
   const expiringSoon = inventory.filter(i => {
     const days = Math.ceil((new Date(i.expiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
@@ -1288,7 +1268,7 @@ function PickPulseApp() {
           <h1 className="text-xl font-bold tracking-tight">PickPulse</h1>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 hide-scrollbar">
           <NavButton active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} icon={<LayoutDashboard size={20} />} label="Dashboard" />
           {(userRole === 'Admin' || userRole === 'Manager') && (
             <NavButton active={activeTab === 'inventory'} onClick={() => setActiveTab('inventory')} icon={<Package size={20} />} label="Inventory" />
@@ -1306,7 +1286,7 @@ function PickPulseApp() {
           )}
         </div>
 
-        <div className="mt-auto space-y-4">
+        <div className="hidden lg:block mt-auto space-y-4">
           {/* Role Selector (Demo Only) */}
           <div className="p-3 bg-slate-800 rounded-xl border border-slate-700">
             <label className="block text-[10px] font-bold text-slate-500 uppercase mb-2 flex items-center gap-2">
@@ -2914,7 +2894,7 @@ function NavButton({ active, onClick, icon, label }: { active: boolean, onClick:
   return (
     <button 
       onClick={onClick}
-      className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+      className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all whitespace-nowrap shrink-0 lg:w-full ${
         active ? 'bg-yellow-400 text-slate-900 font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-800/50'
       }`}
     >
