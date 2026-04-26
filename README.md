@@ -23,6 +23,12 @@
 > A production-grade operations platform engineered for the speed of quick commerce.  
 > Built to give dark store teams full visibility and control — from shelf to doorstep.
 
+<br/>
+
+### 🚀 [View Live Prototype →](https://pick-pulse-five.vercel.app)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-pick--pulse--five.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://pick-pulse-five.vercel.app)
+
 </div>
 
 ---
@@ -30,6 +36,7 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [Live Demo](#live-demo)
 - [Key Features](#key-features)
 - [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
@@ -52,6 +59,22 @@
 PickPulse is a **mobile-first, real-time operations platform** built for dark stores and quick-commerce warehouses. It digitizes every layer of store operations — from live inventory tracking and picker coordination to compliance logging and AI-driven demand forecasting — into a single, unified interface optimized for speed and reliability.
 
 Whether you're managing a team of pickers, auditing expiry dates, or trying to cut pick-path times, PickPulse gives you the tools to operate at 10-minute delivery speeds.
+
+---
+
+## Live Demo
+
+> **Try it live — no setup required.**
+
+| | |
+|---|---|
+| 🌐 **URL** | [https://pick-pulse-five.vercel.app](https://pick-pulse-five.vercel.app) |
+| 🖥️ **Hosting** | Vercel (Edge Network) |
+| 📱 **Optimized for** | Mobile & Desktop |
+| 🔄 **Status** | ![Status](https://img.shields.io/website?url=https%3A%2F%2Fpick-pulse-five.vercel.app&style=flat-square&label=uptime&color=22c55e) |
+
+> The prototype is connected to a live Firebase backend. Features like real-time inventory updates, picker management, and compliance logs are fully functional.  
+> AI forecasting features require a valid API key and may be limited in the demo environment.
 
 ---
 
