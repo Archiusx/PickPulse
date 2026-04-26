@@ -1255,7 +1255,7 @@ function PickPulseApp() {
   };
 
   return (
-    <div className={`h-[100dvh] w-full flex flex-col lg:flex-row overflow-hidden ${darkMode ? 'dark bg-slate-950' : 'bg-slate-50'}`}>
+    <div className={`min-h-[100dvh] lg:h-[100dvh] w-full flex flex-col lg:flex-row lg:overflow-hidden ${darkMode ? 'dark bg-slate-950' : 'bg-slate-50'}`}>
       {/* Toast System */}
       <div className="fixed top-4 right-4 z-[200] flex flex-col gap-2">
         <AnimatePresence>
@@ -1280,7 +1280,7 @@ function PickPulseApp() {
         </AnimatePresence>
       </div>
       {/* Sidebar */}
-      <nav className="w-full lg:w-64 lg:h-full bg-slate-900 text-white p-4 lg:p-6 flex flex-col gap-4 lg:gap-8 overflow-y-auto shrink-0 z-10">
+      <nav className="w-full lg:w-64 lg:h-full bg-slate-900 text-white p-4 lg:p-6 flex flex-col gap-4 lg:gap-8 lg:overflow-y-auto shrink-0 z-10">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 brand-yellow rounded-lg flex items-center justify-center">
             <Zap className="text-white fill-white" size={24} />
@@ -1348,7 +1348,7 @@ function PickPulseApp() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 h-full p-4 lg:p-8 overflow-y-auto overflow-x-hidden transition-colors duration-300 max-w-[1600px] mx-auto w-full">
+      <main className="flex-1 lg:h-full p-4 lg:p-8 lg:overflow-y-auto overflow-x-hidden transition-colors duration-300 max-w-[1600px] mx-auto w-full">
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
