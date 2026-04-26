@@ -21,7 +21,7 @@ export async function getDemandForecast(localContext: string, currentInventory: 
   if (!ai) return null;
 
   const prompt = `
-    You are an expert supply chain analyst for Blinkit. 
+    You are an expert supply chain analyst for PickPulse. 
     Context: ${localContext}
     Current Inventory: ${JSON.stringify(currentInventory)}
     

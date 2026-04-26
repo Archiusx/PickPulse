@@ -417,12 +417,12 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 export default function App() {
   return (
     <ErrorBoundary>
-      <BlinkAIApp />
+      <PickPulseApp />
     </ErrorBoundary>
   );
 }
 
-function BlinkAIApp() {
+function PickPulseApp() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [compliance, setCompliance] = useState<ComplianceRecord[]>([]);
   const [activeTab, setActiveTab] = useState<'dashboard' | 'inventory' | 'picking' | 'ai' | 'compliance' | 'tickets' | 'approvals' | 'vendors' | 'history'>('dashboard');
@@ -1207,7 +1207,7 @@ function BlinkAIApp() {
           className="text-center"
         >
           <Zap className="text-yellow-400 mx-auto mb-4" size={48} />
-          <h1 className="text-2xl font-bold text-white">BlinkAI Loading...</h1>
+          <h1 className="text-2xl font-bold text-white">PickPulse Loading...</h1>
         </motion.div>
       </div>
     );
@@ -1217,14 +1217,14 @@ function BlinkAIApp() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-900 p-4">
         <div className="max-w-md w-full glass-panel p-8 text-center bg-white/10 border-white/20">
-          <div className="w-16 h-16 blinkit-yellow rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Zap className="text-slate-900 fill-slate-900" size={32} />
+          <div className="w-16 h-16 brand-yellow rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <Zap className="text-white fill-white" size={32} />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome to BlinkAI</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome to PickPulse</h1>
           <p className="text-slate-400 mb-8">Secure Dark Store Inventory Management System</p>
           <button 
             onClick={handleLogin}
-            className="w-full py-4 bg-yellow-400 text-slate-900 font-bold rounded-xl hover:bg-yellow-300 transition-all flex items-center justify-center gap-3"
+            className="w-full py-4 bg-yellow-400 text-slate-900 font-bold rounded-xl hover:bg-blue-400 transition-all flex items-center justify-center gap-3"
           >
             <User size={20} />
             Sign in with Google
@@ -1255,7 +1255,7 @@ function BlinkAIApp() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col lg:flex-row ${darkMode ? 'dark bg-slate-950' : 'bg-slate-50'}`}>
+    <div className={`h-[100dvh] w-full flex flex-col lg:flex-row overflow-hidden ${darkMode ? 'dark bg-slate-950' : 'bg-slate-50'}`}>
       {/* Toast System */}
       <div className="fixed top-4 right-4 z-[200] flex flex-col gap-2">
         <AnimatePresence>
@@ -1280,12 +1280,12 @@ function BlinkAIApp() {
         </AnimatePresence>
       </div>
       {/* Sidebar */}
-      <nav className="w-full lg:w-64 bg-slate-900 text-white p-6 flex flex-col gap-8">
+      <nav className="w-full lg:w-64 lg:h-full bg-slate-900 text-white p-4 lg:p-6 flex flex-col gap-4 lg:gap-8 overflow-y-auto shrink-0 z-10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 blinkit-yellow rounded-lg flex items-center justify-center">
-            <Zap className="text-slate-900 fill-slate-900" size={24} />
+          <div className="w-10 h-10 brand-yellow rounded-lg flex items-center justify-center">
+            <Zap className="text-white fill-white" size={24} />
           </div>
-          <h1 className="text-xl font-bold tracking-tight">BlinkAI</h1>
+          <h1 className="text-xl font-bold tracking-tight">PickPulse</h1>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -1348,7 +1348,7 @@ function BlinkAIApp() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 lg:p-8 overflow-y-auto transition-colors duration-300 max-w-[1600px] mx-auto w-full">
+      <main className="flex-1 h-full p-4 lg:p-8 overflow-y-auto overflow-x-hidden transition-colors duration-300 max-w-[1600px] mx-auto w-full">
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
@@ -1590,7 +1590,7 @@ function BlinkAIApp() {
                     <button 
                       onClick={runAiForecast}
                       disabled={aiLoading}
-                      className="w-fit px-6 py-3 blinkit-yellow text-slate-900 font-bold rounded-xl hover:opacity-90 transition-all flex items-center gap-2 disabled:opacity-50"
+                      className="w-fit px-6 py-3 brand-yellow text-white font-bold rounded-xl hover:opacity-90 transition-all flex items-center gap-2 disabled:opacity-50"
                     >
                       {aiLoading ? 'Analyzing...' : 'Generate Forecast'}
                       <ChevronRight size={20} />
@@ -1703,7 +1703,7 @@ function BlinkAIApp() {
                       setIsBatchScanning(true);
                       setBatchScannedBarcodes([]);
                     }}
-                    className="px-3 py-1 bg-yellow-400 text-slate-900 text-[10px] font-bold rounded-full hover:bg-yellow-300 transition-all flex items-center gap-1"
+                    className="px-3 py-1 bg-yellow-400 text-slate-900 text-[10px] font-bold rounded-full hover:bg-blue-400 transition-all flex items-center gap-1"
                   >
                     <Camera size={12} />
                     Batch Scan
@@ -2014,7 +2014,7 @@ function BlinkAIApp() {
                           setShowComplianceForm(false);
                           addToast('Compliance log added', 'success');
                         }}
-                        className="w-full py-3 blinkit-yellow text-slate-900 font-bold rounded-xl"
+                        className="w-full py-3 brand-yellow text-white font-bold rounded-xl"
                       >
                         Submit Record
                       </button>
@@ -2058,7 +2058,7 @@ function BlinkAIApp() {
                 <h3 className="text-xl font-bold dark:text-white">Issue Tickets</h3>
                 <button 
                   onClick={() => setShowTicketModal(true)}
-                  className="px-4 py-2 blinkit-yellow text-slate-900 font-bold rounded-lg flex items-center gap-2"
+                  className="px-4 py-2 brand-yellow text-white font-bold rounded-lg flex items-center gap-2"
                 >
                   <Plus size={18} />
                   New Ticket
@@ -2302,7 +2302,7 @@ function BlinkAIApp() {
                   />
                   <button 
                     type="submit"
-                    className="p-3 blinkit-yellow text-slate-900 rounded-xl hover:opacity-90 transition-all"
+                    className="p-3 brand-yellow text-white rounded-xl hover:opacity-90 transition-all"
                   >
                     <ChevronRight size={24} />
                   </button>
@@ -2359,7 +2359,7 @@ function BlinkAIApp() {
 
                 <button 
                   onClick={() => setShowAddItemModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 blinkit-yellow text-slate-900 rounded-lg hover:bg-yellow-300 transition-all text-sm font-bold ml-auto"
+                  className="flex items-center gap-2 px-4 py-2 brand-yellow text-white rounded-lg hover:bg-blue-400 transition-all text-sm font-bold ml-auto"
                 >
                   <Plus size={16} />
                   Add Item
@@ -2808,7 +2808,7 @@ function BlinkAIApp() {
                 <button 
                   onClick={handleAddItem}
                   disabled={!newItem.name || !newItem.location}
-                  className="w-full py-3 blinkit-yellow text-slate-900 font-bold rounded-xl disabled:opacity-50"
+                  className="w-full py-3 brand-yellow text-white font-bold rounded-xl disabled:opacity-50"
                 >
                   Add to Inventory
                 </button>
@@ -2857,7 +2857,7 @@ function BlinkAIApp() {
                     setShowTicketModal(false);
                     setNewTicket({ type: 'qr_unreadable', description: '', itemId: '' });
                   }}
-                  className="w-full py-3 blinkit-yellow text-slate-900 font-bold rounded-xl"
+                  className="w-full py-3 brand-yellow text-white font-bold rounded-xl"
                 >
                   Submit Ticket
                 </button>
@@ -2876,7 +2876,7 @@ function BlinkAIApp() {
         <div className="space-y-6">
           <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
             <h4 className="text-sm font-bold text-blue-900 mb-1">Problem: Stockouts</h4>
-            <p className="text-xs text-blue-700">BlinkAI uses Gemini to predict demand spikes based on local events, automating replenishment triggers before stock hits zero.</p>
+            <p className="text-xs text-blue-700">PickPulse uses Gemini to predict demand spikes based on local events, automating replenishment triggers before stock hits zero.</p>
           </div>
           <div className="p-4 bg-orange-50 rounded-xl border border-orange-100">
             <h4 className="text-sm font-bold text-orange-900 mb-1">Problem: Expiry Wastage</h4>
@@ -2975,7 +2975,7 @@ const PickingItem: React.FC<PickingItemProps> = ({ name, location, qty, status, 
     }`}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 blinkit-yellow rounded-lg flex items-center justify-center font-black text-slate-900 text-xs">
+          <div className="w-8 h-8 brand-yellow rounded-lg flex items-center justify-center font-black text-white text-xs">
             {location}
           </div>
           <span className="font-bold text-xs text-slate-500 uppercase tracking-widest">Shelf Location</span>

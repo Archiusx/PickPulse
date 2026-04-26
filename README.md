@@ -1,6 +1,6 @@
-# BlinkAI - Intelligent Dark Store Management
+# PickPulse - Intelligent Dark Store Management
 
-BlinkAI is a modern, real-time application designed to streamline quick-commerce and dark store operations. It features intelligent inventory management, picker coordination, compliance tracking, and leverages Google's Gemini AI for demand forecasting and slotting optimization.
+PickPulse is a modern, real-time application designed to streamline quick-commerce and dark store operations. It features intelligent inventory management, picker coordination, compliance tracking, and leverages Google's Gemini AI for demand forecasting and slotting optimization.
 
 ## 🌟 Key Features
 
@@ -26,7 +26,7 @@ This project has a "Flat" structure (all files in the main directory), making it
 ### Step-by-Step Vercel Guide
 1. Go to [Vercel](https://vercel.com) and log in.
 2. Select **Add New** -> **Project**.
-3. Import your `BlinkAI` GitHub repository.
+3. Import your `PickPulse` GitHub repository.
 4. **Environment Variables:** Make sure you expand the "Environment Variables" section before deploying and add the following key:
    * **Name:** `GEMINI_API_KEY`
    * **Value:** (Your Google Gemini API Key)
