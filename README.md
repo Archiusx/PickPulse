@@ -1,6 +1,7 @@
 # PickPulse - Intelligent Dark Store Management
 
-Assets/Screenshot_2026-04-26-13-35-15-07_40deb401b9ffe8e1df2f1cc5ba480b12.jpg
+![Screenshot description](Assets/Screenshot_2026-04-26-13-35-15-07_40deb401b9ffe8e1df2f1cc5ba480b12.jpg)
+
 
 PickPulse is a modern, real-time application designed to streamline quick-commerce and dark store operations. It features intelligent inventory management, picker coordination, compliance tracking, and leverages Google's Gemini AI for demand forecasting and slotting optimization.
 
