@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';
-import { db, auth } from './fakeFirebase';
+import { db, auth } from './firebase';
 import { 
   LayoutDashboard, 
   Package, 
@@ -78,14 +78,14 @@ import {
   limit,
   setDoc,
   getDocs
-} from './fakeFirebase';
+} from 'firebase/firestore';
 import { 
   signInWithPopup, 
   GoogleAuthProvider, 
   onAuthStateChanged,
   signOut,
   User as FirebaseUser
-} from './fakeFirebase';
+} from 'firebase/auth';
 import { Scanner } from './Scanner';
 
 // Types
@@ -431,10 +431,10 @@ function PickPulseApp() {
   const [forecast, setForecast] = useState<any>(null);
   const [optimizations, setOptimizations] = useState<any>(null);
   const [localContext, setLocalContext] = useState('IPL Match in Nagpur today - high demand for snacks and cold drinks.');
-  const [user, setUser] = useState<FirebaseUser | null>(auth.currentUser as FirebaseUser | null);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<string | null>(null);
-  const [isAuthReady, setIsAuthReady] = useState(true);
+  const [isAuthReady, setIsAuthReady] = useState(false);
   const [pickingOrder, setPickingOrder] = useState<InventoryItem[]>([
     { id: '1', name: 'Amul Gold Milk 1L', category: 'Dairy', stock: 12, minStock: 20, expiryDate: '2026-04-09', location: 'A-12', pickingFrequency: 85 },
     { id: '2', name: 'Britannia Bread', category: 'Bakery', stock: 45, minStock: 30, expiryDate: '2026-04-10', location: 'B-04', pickingFrequency: 70 },
@@ -1210,6 +1210,28 @@ function PickPulseApp() {
           <Zap className="text-yellow-400 mx-auto mb-4" size={48} />
           <h1 className="text-2xl font-bold text-white">PickPulse Loading...</h1>
         </motion.div>
+      </div>
+    );
+  }
+
+
+  if (!user) {
+    return (
+      <div className="min-h-[100dvh] flex items-center justify-center bg-slate-900 p-4">
+        <div className="max-w-md w-full glass-panel p-8 text-center bg-white/10 border-white/20">
+          <div className="w-16 h-16 brand-yellow rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <Zap className="text-white fill-white" size={32} />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome to PickPulse</h1>
+          <p className="text-slate-400 mb-8">Secure Dark Store Inventory Management System</p>
+          <button 
+            onClick={handleLogin}
+            className="w-full py-4 brand-yellow text-white font-bold rounded-xl hover:bg-blue-400 transition-all flex items-center justify-center gap-3"
+          >
+            <User size={20} />
+            Sign in with Google
+          </button>
+        </div>
       </div>
     );
   }

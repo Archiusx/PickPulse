@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { initializeFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
+
 const firebaseConfig = {
   apiKey: "AIzaSyDAwty9lfGsj-hAf1QffMJLtvUfhdd_SPI",
   authDomain: "loginx-897b3.firebaseapp.com",
@@ -13,7 +14,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = initializeFirestore(app, {
-  experimentalForceLongPolling: true,
-});
 export const auth = getAuth(app);
+export const db = getFirestore(app);
